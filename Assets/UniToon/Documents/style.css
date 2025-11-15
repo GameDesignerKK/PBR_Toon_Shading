@@ -1,0 +1,13 @@
+.side-sticky {
+  position: sticky;
+  top: 200px;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+}
+
+footer {
+  padding: 1rem 0.5rem 1.5rem !important;
+}
