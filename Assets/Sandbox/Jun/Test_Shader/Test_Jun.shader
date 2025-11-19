@@ -1,4 +1,4 @@
-Shader "Custom/FirstTry"
+Shader "Custom/Test_Jun"
 {
     Properties
     {
