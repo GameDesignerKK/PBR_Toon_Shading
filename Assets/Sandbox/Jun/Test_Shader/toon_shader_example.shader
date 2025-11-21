@@ -1,4 +1,4 @@
-Shader "Custom/Test_Jun"
+Shader "Custom/toon_shader_example"
 {
     Properties
     {
