@@ -54,9 +54,13 @@ Shader "Custom/pbr_shader_example"
                 float roughness = 1 - smoothness;
 
                 Light main_light = GetMainLight();
+                // L
                 float3 light_direction = normalize(main_light.direction);
+                // V
                 float3 view = normalize(_WorldSpaceCameraPos - IN.positionWS);
+                // N
                 float3 normal = normalize(IN.normalWS);
+                // H
                 float3 half_vector = normalize(light_direction + view);
 
                 float NdotL = saturate(dot(normal, light_direction));
@@ -65,7 +69,7 @@ Shader "Custom/pbr_shader_example"
                 float VdotH = saturate(dot(view, half_vector));
 
                 // Fresnel
-                float3 F0 = lerp(0.04.xxx, albedo, metallic);
+                float3 F0 = lerp(0.04, albedo, metallic);
                 float3 F = F0 + (1 - F0) * pow(1 - VdotH, 5);
 
                 // GGX
@@ -80,11 +84,21 @@ Shader "Custom/pbr_shader_example"
                 float G_L = NdotL / (NdotL * (1 - k) + k);
                 float G = G_L * G_V;
 
-                float3 spec = (D * F * G) / (4 * NdotL * NdotV + 0.001);
+                float3 R = reflect(-view, normal);
+                // Glossy env reflection; roughness controls blur
+                // from Lighting.hlsl (URP)
+                float3 envSpec = GlossyEnvironmentReflection(R, roughness, 1.0);
 
-                float3 diffuse = (1 - metallic) * albedo / PI;
+                // Fresnel-weighted env spec
+                float3 specEnv = envSpec * F;
 
-                float3 color = (diffuse + spec) * main_light.color * NdotL;
+                float3 spec = (D * F * G) / max(4 * NdotL * NdotV, 0.001);
+
+                float3 diffuse = (((1 - F) * (1 - metallic)) * albedo) / PI;
+
+                float3 ambientDiff = SampleSH(normal) * albedo;
+
+                float3 color = (diffuse + spec) * main_light.color * NdotL + ambientDiff + specEnv;
 
                 return float4(color, 1);
             }

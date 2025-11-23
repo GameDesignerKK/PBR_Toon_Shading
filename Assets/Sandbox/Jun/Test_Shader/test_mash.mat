@@ -105,9 +105,9 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _ShadowEdgeA: 0.404
-    - _ShadowEdgeB: 0.559
-    - _Shininess: 3
+    - _ShadowEdgeA: 0.516
+    - _ShadowEdgeB: 0.601
+    - _Shininess: 4
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
