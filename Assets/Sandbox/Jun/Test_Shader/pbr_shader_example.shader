@@ -27,6 +27,7 @@ Shader "Custom/pbr_shader_example"
             #pragma target 2.0
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile_fragment _ _ENVIRONMENT_REFLECTIONS_OFF
             #pragma multi_compile_fragment _ _REFLECTION_PROBE_BLENDING
             #pragma multi_compile_fragment _ _REFLECTION_PROBE_BOX_PROJECTION
             #pragma multi_compile_fragment _ _REFLECTION_PROBE_ATLAS
