@@ -9,16 +9,33 @@ Shader "Custom/pbr_shader_example"
 
     SubShader
     {
-        Tags { "RenderType"="Opaque" "Queue"="Geometry" }
+        Tags
+        {
+            "RenderType" = "Opaque"
+            "Queue" = "Geometry"
+            "RenderPipeline" = "UniversalPipeline"
+            "UniversalMaterialType" = "Lit"
+        }
         LOD 300
 
         Pass
         {
+            Name "ForwardLit"
+            Tags {"LightMode" = "UniversalForward"}
+
             HLSLPROGRAM
+            #pragma target 2.0
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile_fragment _ _REFLECTION_PROBE_BLENDING
+            #pragma multi_compile_fragment _ _REFLECTION_PROBE_BOX_PROJECTION
+            #pragma multi_compile_fragment _ _REFLECTION_PROBE_ATLAS
+            #pragma multi_compile_fragment _ _ENVIRONMENTREFLECTIONS_OFF
+            #pragma multi_compile _ _LIGHT_LAYERS
+            #pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/GlobalIllumination.hlsl"
 
             struct Attributes
             {
@@ -118,6 +135,7 @@ Shader "Custom/pbr_shader_example"
                 float3 color = directColor + iblDiffuse + iblSpec + baseAmbient;
 
                 return float4(color, 1.0);
+                //return float4(envSpec, 1.0);
             }
             ENDHLSL
         }
