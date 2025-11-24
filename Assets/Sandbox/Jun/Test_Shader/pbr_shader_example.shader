@@ -48,6 +48,7 @@ Shader "Custom/pbr_shader_example"
 
             half4 frag (Varyings IN) : SV_Target
             {
+                // Material parameters
                 float3 albedo = _Albedo.rgb;
                 float metallic = _Metallic;
                 float smoothness = _Smoothness;
@@ -68,39 +69,54 @@ Shader "Custom/pbr_shader_example"
                 float NdotH = saturate(dot(normal, half_vector));
                 float VdotH = saturate(dot(view, half_vector));
 
-                // Fresnel
-                float3 F0 = lerp(0.04, albedo, metallic);
+                // Fresnel (Schlick) F
+                float3 F0 = lerp(0.04.xxx, albedo, metallic);
                 float3 F = F0 + (1 - F0) * pow(1 - VdotH, 5);
 
-                // GGX
+                // GGX NDF D
                 float a = roughness * roughness;
                 float a2 = a * a;
                 float denom = (NdotH * NdotH) * (a2 - 1) + 1;
-                float D = a2 / (PI * denom * denom);
+                float D = a2 / (PI * denom * denom + 1e-7);
 
-                // Geometry
+                // Geometry term G (Smith-Schlick)
                 float k = (roughness + 1) * (roughness + 1) / 8;
                 float G_V = NdotV / (NdotV * (1 - k) + k);
                 float G_L = NdotL / (NdotL * (1 - k) + k);
                 float G = G_L * G_V;
 
+                float denomSpec = max(4.0 * NdotL * NdotV, 0.001);
+                float3 specDirect = (D * F * G) / denomSpec;
+
+                // Diffuse BRDF
+                // Kd = (1 - metallic) * (1 - F) --- (Disney style)
+                float minDiffuseForMetal = 0.05;
+                float3 KdDielectric = (1.0 - metallic) * (1.0 - F);
+                float3 KdMetalBoost = minDiffuseForMetal * metallic;
+                float3 Kd = KdDielectric + KdMetalBoost;
+                float3 diffuseDirect = Kd * albedo / PI;
+
+                // Direct lighting from main light
+                float3 directColor = (diffuseDirect + specDirect) * main_light.color * NdotL;
+
+                // IBL / Environment
+                // 1) Environment diffuse (SH-based GI / sky)
+                float3 envDiffuse = SampleSH(normal);
+                float3 iblDiffuse = envDiffuse * Kd * albedo;
+
+                // 2) Environment specular
                 float3 R = reflect(-view, normal);
-                // Glossy env reflection; roughness controls blur
-                // from Lighting.hlsl (URP)
-                float3 envSpec = GlossyEnvironmentReflection(R, roughness, 1.0);
+                float perceptualRoughness = roughness;
+                float occlusion = 1.0;
 
-                // Fresnel-weighted env spec
-                float3 specEnv = envSpec * F;
+                float3 envSpec = GlossyEnvironmentReflection(R, perceptualRoughness, occlusion);
+                float3 iblSpec = envSpec * F;
 
-                float3 spec = (D * F * G) / max(4 * NdotL * NdotV, 0.001);
+                float3 baseAmbient = 0.05 * albedo;
 
-                float3 diffuse = (((1 - F) * (1 - metallic)) * albedo) / PI;
+                float3 color = directColor + iblDiffuse + iblSpec + baseAmbient;
 
-                float3 ambientDiff = SampleSH(normal) * albedo;
-
-                float3 color = (diffuse + spec) * main_light.color * NdotL + ambientDiff + specEnv;
-
-                return float4(color, 1);
+                return float4(color, 1.0);
             }
             ENDHLSL
         }
