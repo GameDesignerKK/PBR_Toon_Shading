@@ -90,7 +90,7 @@ Shader "Custom/pbr_shader_example"
 
                 // Diffuse BRDF
                 // Kd = (1 - metallic) * (1 - F) --- (Disney style)
-                float minDiffuseForMetal = 0.05;
+                float minDiffuseForMetal = 0.05; // fake
                 float3 KdDielectric = (1.0 - metallic) * (1.0 - F);
                 float3 KdMetalBoost = minDiffuseForMetal * metallic;
                 float3 Kd = KdDielectric + KdMetalBoost;
@@ -111,8 +111,9 @@ Shader "Custom/pbr_shader_example"
 
                 float3 envSpec = GlossyEnvironmentReflection(R, perceptualRoughness, occlusion);
                 float3 iblSpec = envSpec * F;
-
-                float3 baseAmbient = 0.05 * albedo;
+                
+                // fake
+                float3 baseAmbient = 0.02 * albedo;
 
                 float3 color = directColor + iblDiffuse + iblSpec + baseAmbient;
 
