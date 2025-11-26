@@ -1,4 +1,4 @@
-Shader "Custom/pbr_shader_example"
+﻿Shader "Custom/pbr_shader_example"
 {
     Properties
     {
@@ -27,13 +27,23 @@ Shader "Custom/pbr_shader_example"
             #pragma target 2.0
             #pragma vertex vert
             #pragma fragment frag
-            #pragma multi_compile_fragment _ _ENVIRONMENT_REFLECTIONS_OFF
+
+            // ***** Lighting keywords from URP Lit shader *****
+            #pragma multi_compile_fragment _ _MAIN_LIGHT_SHADOWS
+            #pragma multi_compile_fragment _ _MAIN_LIGHT_SHADOWS_CASCADE
+            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHTS
+            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
+            #pragma multi_compile_fragment _ _SHADOWS_SOFT
+
+            // ***** Reflection Probes keywords *****
             #pragma multi_compile_fragment _ _REFLECTION_PROBE_BLENDING
             #pragma multi_compile_fragment _ _REFLECTION_PROBE_BOX_PROJECTION
             #pragma multi_compile_fragment _ _REFLECTION_PROBE_ATLAS
-            #pragma multi_compile_fragment _ _ENVIRONMENTREFLECTIONS_OFF
-            #pragma multi_compile _ _LIGHT_LAYERS
+            #pragma multi_compile_fragment _ _ENVIRONMENT_REFLECTIONS
+
+            // ***** SSAO *****
             #pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
+
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/GlobalIllumination.hlsl"
@@ -128,16 +138,19 @@ Shader "Custom/pbr_shader_example"
 
                 // 2) Environment specular
                 float3 R = reflect(-view, normal);
-                float perceptualRoughness = roughness;
+                float perceptualRoughness = saturate(roughness);
                 float occlusion = 1.0;
 
+                perceptualRoughness = 0; // for testing
                 float3 envSpec = GlossyEnvironmentReflection(R, perceptualRoughness, occlusion);
+                //float3 envSpec = GlossyEnvironmentReflection(R, 1.0, occlusion);
+                //float3 envSpec = GlossyEnvironmentReflection(R, 0, occlusion);
                 float3 iblSpec = envSpec * F;
 
                 float3 color = directColor + iblDiffuse + iblSpec;
 
-                return float4(color, 1.0);
-                //return float4(envSpec, 1.0);
+                //return float4(color, 1.0);
+                return float4(envSpec, 1.0);
             }
             ENDHLSL
         }
