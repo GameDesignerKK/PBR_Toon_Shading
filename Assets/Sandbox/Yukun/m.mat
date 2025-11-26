@@ -25,18 +25,18 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 301b8126c8640ea428af154bbcd81dcb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _ShadowEdgeA: 0.442
     - _ShadowEdgeB: 0.476
-    - _Shininess: 81.5
+    - _Shininess: 6.5
     m_Colors:
-    - _BaseColor: {r: 0.9820424, g: 0.8537736, b: 1, a: 1}
-    - _ShadowColor: {r: 0.4716981, g: 0.35822356, b: 0.41033256, a: 1}
-    - _SpecularColor: {r: 1, g: 0.8254717, b: 0.9901052, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ShadowColor: {r: 0.28969383, g: 0.30189162, b: 0.3962264, a: 1}
+    - _SpecularColor: {r: 1, g: 0.82670146, b: 0.5235849, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &9189692971486876150

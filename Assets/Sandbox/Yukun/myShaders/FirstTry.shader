@@ -23,7 +23,7 @@ Shader "Custom/FirstTry"
             #pragma vertex vert
             #pragma fragment frag
 
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            //#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             //#include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
 
@@ -91,7 +91,7 @@ Shader "Custom/FirstTry"
 
                 //  Calculate light reflection direction
                 half3 reflectDirWS = reflect(-lightDirWS_n, normalWS_n);
-                //  Calculate V¡¤R
+                //  Calculate VdotR
                 half VdotR = saturate(dot(viewDirWS_n, reflectDirWS));
                 //  Calculate specular term
                 half3 specular = mainLight.color * _SpecularColor.rgb * pow(VdotR, _Shininess);
