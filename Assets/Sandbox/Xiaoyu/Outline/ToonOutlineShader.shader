@@ -2,6 +2,7 @@ Shader "Custom/ToonOutlineShader"
 {
     Properties
     {
+        _BaseColor ("BaseColor", Color) = (1,1,1,1)
         _OutlineColor ("Outline Color", Color) = (0,0,0,1)
         _OutlineWidth ("OutlineWidth", Float) = 0.05
      }
@@ -12,7 +13,8 @@ Shader "Custom/ToonOutlineShader"
         {
             "RenderType" = "Opaque"
             "Queue" = "Geometry"
-         }
+            "RenderPipeline" = "UniversalPipeline"
+        }
 
         Pass
         {
