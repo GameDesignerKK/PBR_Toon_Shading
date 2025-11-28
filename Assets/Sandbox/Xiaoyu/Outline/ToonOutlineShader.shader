@@ -28,10 +28,10 @@ Shader "Custom/ToonOutlineShader"
             #pragma fragment OutlineFrag
 
             float4 _OutlineColor;
-            float4 _OutlineWidth;
+            float _OutlineWidth;
 
             float4x4 unity_ObjectToWorld;
-            float4x4 unity_Matrix_VP;
+            float4x4 unity_MatrixVP;
 
             // Object Space
             struct InputData
@@ -43,21 +43,33 @@ Shader "Custom/ToonOutlineShader"
             // Vertex Shader to Fragment Shader
             struct FragData
             {
-                float4 positionClip = SV_POSITION;
+                float4 position : SV_POSITION;
             };
 
-            FragData OutlineVertex (InputData IN)
+            FragData OutlineVert (InputData IN)
             {
                 FragData OUT;
 
-                float3x3 ObjToWorld_RS = (float3x3)unity_ObjectToWorld;
-                
-                float3 NormalOToW = mul(ObjToWorld_RS, IN.normal);
+                float3x3 ObjToWorldRS = (float3x3)unity_ObjectToWorld;
+                float3 NormalOToW = mul(ObjToWorldRS, IN.normal);
                 NormalOToW = normalize(NormalOToW);
 
+                float4 PositionWithW = mul(unity_ObjectToWorld, IN.position);
+                float3 PositionWorld = PositionWithW.xyz; // Drop W in float 4
+                PositionWorld += NormalOToW * _OutlineWidth;
 
-                }
+                float4 PositionClip = mul(unity_MatrixVP, float4(PositionWorld, 1.0));
+                OUT.position = PositionClip;
 
+                return OUT;
+            }
+
+            float4 OutlineFrag (FragData IN) : SV_Target
+            {
+                return _OutlineColor;
+            }
+            
+            ENDHLSL
         }
     }
 }
