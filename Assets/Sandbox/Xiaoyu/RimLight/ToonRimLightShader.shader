@@ -29,6 +29,7 @@ Shader "Custom/RimLightShader"
             HLSLPROGRAM
             #pragma vertex RimVert
             #pragma fragment RimFrag
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _RimColor;
@@ -41,23 +42,23 @@ Shader "Custom/RimLightShader"
             CBUFFER_END
 
             // Object Space
-            struct InputData
+            struct Attributes
             {
                 float4 position : POSITION;
                 float3 normal : NORMAL;
             };
 
             // Vertex Shader to Fragment Shader
-            struct FragData
+            struct Varyings
             {
                 float4 position : SV_POSITION;
                 float3 normal : NORMAL;
                 float3 wposition : TEXCOORD0;
             };
 
-            FragData RimVert (InputData IN)
+            Varyings RimVert (Attributes IN)
             {
-                FragData OUT;
+                Varyings OUT;
 
                 float3 Normal = UnityObjectToWorldNormal(IN.normal);
 
@@ -75,7 +76,7 @@ Shader "Custom/RimLightShader"
                 return OUT;
             }
 
-            float4 RimFrag (FragData IN) : SV_Target
+            float4 RimFrag (Varyings IN) : SV_Target
             {
                 float3 Normal = normalize(IN.normal);
                 float3 View = normalize(_WorldSpaceCameraPos - IN.wposition);
