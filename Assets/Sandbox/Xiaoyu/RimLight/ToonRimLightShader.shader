@@ -36,9 +36,9 @@ Shader "Custom/RimLightShader"
                 float _RimSharpness;
                 float _RimBrightness;
                 float _RimDepthOffset;
-                float4x4 unity_ObjectToWorld;
-                float4x4 unity_MatrixVP;
-                float3 _WorldSpaceCameraPos;
+                //float4x4 unity_ObjectToWorld;
+                //float4x4 unity_MatrixVP;
+                //float3 _WorldSpaceCameraPos;
             CBUFFER_END
 
             // Object Space
@@ -60,7 +60,7 @@ Shader "Custom/RimLightShader"
             {
                 Varyings OUT;
 
-                float3 Normal = UnityObjectToWorldNormal(IN.normal);
+                float3 Normal = TransformObjectToWorldNormal(IN.normal);
 
                 float4 PositionWorld4 = mul(unity_ObjectToWorld, IN.position);
                 float3 PositionWorld3 = PositionWorld4.xyz; // Drop W from float4 PositionWorld4 

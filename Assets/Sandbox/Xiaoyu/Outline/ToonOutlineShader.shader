@@ -31,8 +31,8 @@ Shader "Custom/ToonOutlineShader"
             CBUFFER_START(UnityPerMaterial)
                 float4 _OutlineColor;
                 float _OutlineWidth;
-                float4x4 unity_ObjectToWorld;
-                float4x4 unity_MatrixVP;
+                //float4x4 unity_ObjectToWorld;
+                //float4x4 unity_MatrixVP;
             CBUFFER_END
 
             // Object Space
@@ -52,11 +52,11 @@ Shader "Custom/ToonOutlineShader"
             {
                 Varyings OUT;
 
-                float3 Normal = UnityObjectToWorldNormal(IN.normal);
+                float3 Normal = TransformObjectToWorldNormal(IN.normal);
 
                 float4 PositionWorld4 = mul(unity_ObjectToWorld, IN.position);
                 float3 PositionWorld3 = PositionWorld4.xyz; // Drop W from float4 PositionWorld4 
-                Position3 += Normal * _OutlineWidth;
+                PositionWorld3 += Normal * _OutlineWidth;
 
                 float4 PositionClip = mul(unity_MatrixVP, float4(PositionWorld3, 1.0));
                 OUT.position = PositionClip;
