@@ -94,7 +94,7 @@ Shader "Tommy/Ramp"
                     float3 T   = normalize(input.tangentWS.xyz);
                     float3 B   = normalize(sgn * cross(N, T));
 
-                    float3x3 TBN = real3x3(T, B, N);
+                    float3x3 TBN = float3x3(T, B, N);
                     float3 normalWS = normalize(mul(normalTS, TBN));   // 转换到世界空间并归一化
 
                     // ==== 主光源 ====
