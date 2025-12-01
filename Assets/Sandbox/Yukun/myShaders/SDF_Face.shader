@@ -21,10 +21,12 @@ Shader "Custom/SDF_Face"
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/EntityLighting.hlsl"
 
             struct Attributes
             {
                 float4 positionOS : POSITION;
+                float4 normalOS : NORMAL;
                 float2 uv : TEXCOORD0;
             };
 
@@ -32,6 +34,8 @@ Shader "Custom/SDF_Face"
             {
                 float4 positionHCS : SV_POSITION;
                 float2 uv : TEXCOORD0;
+                half3 normalWS : TEXCOORD1;
+                half3 diffuseGI : TEXCOORD2;
             };
 
             TEXTURE2D(_BaseMap);
@@ -50,7 +54,11 @@ Shader "Custom/SDF_Face"
             {
                 Varyings OUT;
                 OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
+                //  Transform normal from Object Space to World Space
+                OUT.normalWS = normalize(TransformObjectToWorldNormal(IN.normalOS.xyz));
                 OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
+
+                OUT.diffuseGI = SampleSH(OUT.normalWS);
                 return OUT;
             }
 
@@ -82,8 +90,15 @@ Shader "Custom/SDF_Face"
                 half sdf_faceShadow = step(FdotL, sdf_color);
 
 
-                half4 base_color = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv);
-                half4 color = lerp(base_color * _ShadowColor, base_color * _BaseColor, sdf_faceShadow);
+                half4 baseMap_color = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv);
+                half4 LiangMian_color = _BaseColor * half4(mainLight.color,1.0);
+                half4 AnMian_color = _ShadowColor;
+                half4 color = baseMap_color * lerp(AnMian_color, LiangMian_color, sdf_faceShadow);
+
+                //  Add Diffuse Global Illumination
+                color.rgb += IN.diffuseGI;
+
+
                 return color;
             }
             ENDHLSL
