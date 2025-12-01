@@ -114,7 +114,7 @@ Material:
     - _Glossiness: 0
     - _GlossinessSource: 0
     - _GlossyReflections: 0
-    - _Metallic: 0.561
+    - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
@@ -122,7 +122,7 @@ Material:
     - _ShadowEdgeA: 0.45
     - _ShadowEdgeB: 0.5
     - _Shininess: 0.188
-    - _Smoothness: 0.52
+    - _Smoothness: 0
     - _SmoothnessSource: 0
     - _SmoothnessTextureChannel: 0
     - _SpecSource: 0

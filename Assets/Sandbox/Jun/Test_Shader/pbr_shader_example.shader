@@ -47,6 +47,7 @@
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/GlobalIllumination.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/BRDF.hlsl"
 
             struct Attributes
             {
@@ -61,9 +62,11 @@
                 float3 positionWS : TEXCOORD0;
             };
 
-            float4 _Albedo;
-            float _Metallic;
-            float _Smoothness;
+            CBUFFER_START(UnityPerMaterial)
+                float4 _Albedo;
+                float _Metallic;
+                float _Smoothness;
+            CBUFFER_END
 
             Varyings vert (Attributes IN)
             {
@@ -80,7 +83,7 @@
                 float3 albedo = _Albedo.rgb;
                 float metallic = _Metallic;
                 float smoothness = _Smoothness;
-                float roughness = 1 - smoothness;
+                float roughness = 1.0 - smoothness;
 
                 Light main_light = GetMainLight();
                 // L
@@ -117,14 +120,6 @@
                 float3 specDirect = (D * F * G) / denomSpec;
 
                 // Diffuse BRDF
-                // Kd = (1 - metallic) * (1 - F) --- (Disney style)
-                // float minDiffuseForMetal = 0.1; fake
-                // float3 KdDielectric = (1.0 - metallic) * (1.0 - F);
-                // float3 KdMetalBoost = minDiffuseForMetal * metallic;
-                // float3 Kd = KdDielectric + KdMetalBoost;
-                // float3 diffuseDirect = Kd * albedo / PI;
-
-                // Diffuse BRDF
                 float3 Kd = (1.0 - metallic) * (1.0 - F);
                 float3 diffuseDirect = Kd * albedo / PI;
 
@@ -138,19 +133,15 @@
 
                 // 2) Environment specular
                 float3 R = reflect(-view, normal);
-                float perceptualRoughness = saturate(roughness);
+                float perceptualRoughness = PerceptualSmoothnessToPerceptualRoughness(smoothness);
                 float occlusion = 1.0;
 
-                perceptualRoughness = 0; // for testing
                 float3 envSpec = GlossyEnvironmentReflection(R, perceptualRoughness, occlusion);
-                //float3 envSpec = GlossyEnvironmentReflection(R, 1.0, occlusion);
-                //float3 envSpec = GlossyEnvironmentReflection(R, 0, occlusion);
                 float3 iblSpec = envSpec * F;
 
                 float3 color = directColor + iblDiffuse + iblSpec;
 
-                //return float4(color, 1.0);
-                return float4(envSpec, 1.0);
+                return float4(color, 1.0);
             }
             ENDHLSL
         }
