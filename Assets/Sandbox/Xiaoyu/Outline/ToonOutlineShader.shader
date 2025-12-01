@@ -26,6 +26,7 @@ Shader "Custom/ToonOutlineShader"
             HLSLPROGRAM 
             #pragma vertex OutlineVert
             #pragma fragment OutlineFrag
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _OutlineColor;
@@ -35,21 +36,21 @@ Shader "Custom/ToonOutlineShader"
             CBUFFER_END
 
             // Object Space
-            struct InputData
+            struct Attributes
             {
                 float4 position : POSITION;
                 float3 normal : NORMAL;
             };
 
             // Vertex Shader to Fragment Shader
-            struct FragData
+            struct Varyings
             {
                 float4 position : SV_POSITION;
             };
 
-            FragData OutlineVert (InputData IN)
+            Varyings OutlineVert (Attributes IN)
             {
-                FragData OUT;
+                Varyings OUT;
 
                 float3 Normal = UnityObjectToWorldNormal(IN.normal);
 
@@ -63,7 +64,7 @@ Shader "Custom/ToonOutlineShader"
                 return OUT;
             }
 
-            float4 OutlineFrag (FragData IN) : SV_Target
+            float4 OutlineFrag (Varyings IN) : SV_Target
             {
                 return _OutlineColor;
             }
