@@ -27,11 +27,12 @@ Shader "Custom/ToonOutlineShader"
             #pragma vertex OutlineVert
             #pragma fragment OutlineFrag
 
-            float4 _OutlineColor;
-            float _OutlineWidth;
-
-            float4x4 unity_ObjectToWorld;
-            float4x4 unity_MatrixVP;
+            CBUFFER_START(UnityPerMaterial)
+                float4 _OutlineColor;
+                float _OutlineWidth;
+                float4x4 unity_ObjectToWorld;
+                float4x4 unity_MatrixVP;
+            CBUFFER_END
 
             // Object Space
             struct InputData
