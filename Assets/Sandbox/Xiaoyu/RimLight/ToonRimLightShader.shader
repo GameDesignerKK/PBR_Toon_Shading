@@ -61,7 +61,7 @@ Shader "Custom/RimLightShader"
                 float3 Normal = UnityObjectToWorldNormal(IN.normal);
 
                 float4 PositionWorld4 = mul(unity_ObjectToWorld, IN.position);
-                float3 PositionWorld3 = PositionWorld4.xyz; // Drop W from float4 Position4 
+                float3 PositionWorld3 = PositionWorld4.xyz; // Drop W from float4 PositionWorld4 
 
                 float3 View = normalize(_WorldSpaceCameraPos - PositionWorld3);
                 float3 PositionWorldOffset = PositionWorld3 + View * _RimDepthOffset;
