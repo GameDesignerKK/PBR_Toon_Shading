@@ -52,11 +52,11 @@ Shader "Custom/ToonOutlineShader"
 
                 float3 Normal = UnityObjectToWorldNormal(IN.normal);
 
-                float4 Position4 = mul(unity_ObjectToWorld, IN.position);
-                float3 Position3 = Position4.xyz; // Drop W from float4 PositionWithW
+                float4 PositionWorld4 = mul(unity_ObjectToWorld, IN.position);
+                float3 PositionWorld3 = PositionWorld4.xyz; // Drop W from float4 PositionWorld4 
                 Position3 += Normal * _OutlineWidth;
 
-                float4 PositionClip = mul(unity_MatrixVP, float4(Position3, 1.0));
+                float4 PositionClip = mul(unity_MatrixVP, float4(PositionWorld3, 1.0));
                 OUT.position = PositionClip;
 
                 return OUT;
