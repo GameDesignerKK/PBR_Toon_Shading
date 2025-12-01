@@ -58,30 +58,28 @@ Shader "Custom/RimLightShader"
             {
                 FragData OUT;
 
-                float3x3 ObjToWorldRS = (float3x3)unity_ObjectToWorld;
-                float3 NormalOToW = mul(ObjToWorldRS, IN.normal);
-                NormalOToW = normalize(NormalOToW);
+                float3 Normal = UnityObjectToWorldNormal(IN.normal);
 
-                float4 PositionWithW = mul(unity_ObjectToWorld, IN.position);
-                float3 PositionWorld = PositionWithW.xyz; // Drop W from float 4 
+                float4 PositionWorld4 = mul(unity_ObjectToWorld, IN.position);
+                float3 PositionWorld3 = PositionWorld4.xyz; // Drop W from float4 Position4 
 
-                float3 view = normalize(_WorldSpaceCameraPos - PositionWorld);
-                float3 PositionWorldOffset = PositionWorld + view * _RimDepthOffset;
+                float3 View = normalize(_WorldSpaceCameraPos - PositionWorld3);
+                float3 PositionWorldOffset = PositionWorld3 + View * _RimDepthOffset;
                 float4 PositionClip = mul(unity_MatrixVP, float4(PositionWorldOffset, 1.0));
 
                 OUT.position = PositionClip;
-                OUT.normal = NormalOToW;
-                OUT.wposition = PositionWorld;
+                OUT.normal = Normal;
+                OUT.wposition = PositionWorld3;
 
                 return OUT;
             }
 
             float4 RimFrag (FragData IN) : SV_Target
             {
-                float3 normal = normalize(IN.normal);
-                float3 view = normalize(_WorldSpaceCameraPos - IN.wposition);
+                float3 Normal = normalize(IN.normal);
+                float3 View = normalize(_WorldSpaceCameraPos - IN.wposition);
 
-                float ViewClamp = 1.0 - saturate(dot(normal, view));
+                float ViewClamp = 1.0 - saturate(dot(Normal, View));
                 float Rim = pow(ViewClamp, _RimSharpness);
                 float3 RimColor = _RimColor.rgb * Rim * _RimBrightness;
 
