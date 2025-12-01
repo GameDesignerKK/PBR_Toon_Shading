@@ -50,15 +50,13 @@ Shader "Custom/ToonOutlineShader"
             {
                 FragData OUT;
 
-                float3x3 ObjToWorldRS = (float3x3)unity_ObjectToWorld;
-                float3 NormalOToW = mul(ObjToWorldRS, IN.normal);
-                NormalOToW = normalize(NormalOToW);
+                float3 Normal = UnityObjectToWorldNormal(IN.normal);
 
-                float4 PositionWithW = mul(unity_ObjectToWorld, IN.position);
-                float3 PositionWorld = PositionWithW.xyz; // Drop W in float 4
-                PositionWorld += NormalOToW * _OutlineWidth;
+                float4 Position4 = mul(unity_ObjectToWorld, IN.position);
+                float3 Position3 = Position4.xyz; // Drop W from float4 PositionWithW
+                Position3 += Normal * _OutlineWidth;
 
-                float4 PositionClip = mul(unity_MatrixVP, float4(PositionWorld, 1.0));
+                float4 PositionClip = mul(unity_MatrixVP, float4(Position3, 1.0));
                 OUT.position = PositionClip;
 
                 return OUT;
