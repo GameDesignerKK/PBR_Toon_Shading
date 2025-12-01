@@ -29,59 +29,59 @@ Shader "Custom/RimLightShader"
             HLSLPROGRAM
             #pragma vertex RimVert
             #pragma fragment RimFrag
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
-            float4 _RimColor;
-            float _RimSharpness;
-            float _RimBrightness;
-            float _RimDepthOffset;
-
-            float4x4 unity_ObjectToWorld;
-            float4x4 unity_MatrixVP;
-            float3 _WorldSpaceCameraPos;
+            CBUFFER_START(UnityPerMaterial)
+                float4 _RimColor;
+                float _RimSharpness;
+                float _RimBrightness;
+                float _RimDepthOffset;
+                //float4x4 unity_ObjectToWorld;
+                //float4x4 unity_MatrixVP;
+                //float3 _WorldSpaceCameraPos;
+            CBUFFER_END
 
             // Object Space
-            struct InputData
+            struct Attributes
             {
                 float4 position : POSITION;
                 float3 normal : NORMAL;
             };
 
             // Vertex Shader to Fragment Shader
-            struct FragData
+            struct Varyings
             {
                 float4 position : SV_POSITION;
                 float3 normal : NORMAL;
                 float3 wposition : TEXCOORD0;
             };
 
-            FragData RimVert (InputData IN)
+            Varyings RimVert (Attributes IN)
             {
-                FragData OUT;
+                Varyings OUT;
 
-                float3x3 ObjToWorldRS = (float3x3)unity_ObjectToWorld;
-                float3 NormalOToW = mul(ObjToWorldRS, IN.normal);
-                NormalOToW = normalize(NormalOToW);
+                float3 Normal = TransformObjectToWorldNormal(IN.normal);
 
-                float4 PositionWithW = mul(unity_ObjectToWorld, IN.position);
-                float3 PositionWorld = PositionWithW.xyz; // Drop W from float 4 
+                float4 PositionWorld4 = mul(unity_ObjectToWorld, IN.position);
+                float3 PositionWorld3 = PositionWorld4.xyz; // Drop W from float4 PositionWorld4 
 
-                float3 view = normalize(_WorldSpaceCameraPos - PositionWorld);
-                float3 PositionWorldOffset = PositionWorld + view * _RimDepthOffset;
+                float3 View = normalize(_WorldSpaceCameraPos - PositionWorld3);
+                float3 PositionWorldOffset = PositionWorld3 + View * _RimDepthOffset;
                 float4 PositionClip = mul(unity_MatrixVP, float4(PositionWorldOffset, 1.0));
 
                 OUT.position = PositionClip;
-                OUT.normal = NormalOToW;
-                OUT.wposition = PositionWorld;
+                OUT.normal = Normal;
+                OUT.wposition = PositionWorld3;
 
                 return OUT;
             }
 
-            float4 RimFrag (FragData IN) : SV_Target
+            float4 RimFrag (Varyings IN) : SV_Target
             {
-                float3 normal = normalize(IN.normal);
-                float3 view = normalize(_WorldSpaceCameraPos - IN.wposition);
+                float3 Normal = normalize(IN.normal);
+                float3 View = normalize(_WorldSpaceCameraPos - IN.wposition);
 
-                float ViewClamp = 1.0 - saturate(dot(normal, view));
+                float ViewClamp = 1.0 - saturate(dot(Normal, View));
                 float Rim = pow(ViewClamp, _RimSharpness);
                 float3 RimColor = _RimColor.rgb * Rim * _RimBrightness;
 
