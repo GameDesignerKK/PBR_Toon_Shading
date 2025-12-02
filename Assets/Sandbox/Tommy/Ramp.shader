@@ -28,6 +28,12 @@ Shader "Tommy/Ramp"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/EntityLighting.hlsl"
 
+            half3 SampleSH_L1(half3 normalWS)
+            {
+                //  Sample Spherical Harmonics L1
+                return SHEvalLinearL0L1(normalWS, unity_SHAr, unity_SHAg, unity_SHAb);
+            }
+
             struct Attributes
             {
                 float4 positionOS : POSITION;
@@ -77,7 +83,7 @@ Shader "Tommy/Ramp"
                     output.normalWS   = vertexNormalInput.normalWS;
                     output.tangentWS  = real4(vertexNormalInput.tangentWS, sign);
 
-                    output.diffuseGI = SampleSH(output.normalWS);
+                    output.diffuseGI = SampleSH_L1(output.normalWS);
 
                     return output;
                 }
