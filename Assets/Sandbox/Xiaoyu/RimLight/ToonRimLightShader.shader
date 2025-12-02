@@ -15,6 +15,7 @@ Shader "Custom/RimLightShader"
             "RenderType" = "Transparent"
             "Queue" = "Transparent+1"
             "RenderPipeline" = "UniversalPipeline"
+            "LightMode" = "UniversalForward"
         }
 
         Pass

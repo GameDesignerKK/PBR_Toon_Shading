@@ -1097,13 +1097,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 461861290}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.37812313, y: -0.40412483, z: 0.18842074, w: 0.8112975}
+  m_LocalRotation: {x: 0.3892903, y: -0.35195136, z: 0.16409989, w: 0.83525723}
   m_LocalPosition: {x: -205.6, y: 164.7, z: -28.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 49.981, y: -52.953, z: 0.01}
+  m_LocalEulerAnglesHint: {x: 49.98, y: -1485.694, z: 0.01}
 --- !u!114 &461861293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3010,7 +3010,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 082f31f704777dd4ca70c370d3192f47, type: 2}
     - target: {fileID: -8679921383154817045, guid: 64795660f327fcb4d9e3162127dbad8f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -173.4
+      value: -180.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64795660f327fcb4d9e3162127dbad8f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3063,6 +3063,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 64795660f327fcb4d9e3162127dbad8f, type: 3}
       propertyPath: m_Name
       value: VepleyMeshDismantled
+      objectReference: {fileID: 0}
+    - target: {fileID: 5244095144442170116, guid: 64795660f327fcb4d9e3162127dbad8f, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6193326813474925514, guid: 64795660f327fcb4d9e3162127dbad8f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -3364,6 +3368,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1904431930
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1904431932}
+  - component: {fileID: 1904431931}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1904431931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904431930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: d0a25ab9839f7894ebaf11b6f5e8b494, type: 2}
+--- !u!4 &1904431932
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904431930}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -151.18167, y: 109.50945, z: 9.137013}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2024463044
 GameObject:
   m_ObjectHideFlags: 0
@@ -3480,8 +3533,8 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 1
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -3520,3 +3573,4 @@ SceneRoots:
   - {fileID: 148121602}
   - {fileID: 1838907919}
   - {fileID: 1140706562}
+  - {fileID: 1904431932}
