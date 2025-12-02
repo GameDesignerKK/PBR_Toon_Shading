@@ -1,7 +1,7 @@
 Shader "Tommy/Ramp"
 {
    Properties
-    {
+   {
         _BaseMap("MainTex", 2D) = "white" {}
         _BaseColor("BaseColor", Color) = (1.0, 1.0, 1.0, 1.0)
         _SpecColor("Specular", Color) = (1.0, 1.0, 1.0, 1.0)
@@ -9,10 +9,10 @@ Shader "Tommy/Ramp"
         _BumpScale("Scale", Float) = 1.0
         _BumpMap("Normal Map", 2D) = "bump" {}
         _RampTex("RampTex", 2D) = "white" {}
-    }
+   }
 
     SubShader
-    {
+   {
         // URP shader 必须声明使用 UniversalRenderPipeline
         Tags
         {
@@ -142,8 +142,7 @@ Shader "Tommy/Ramp"
 
                     return color;
                 }
-
             ENDHLSL
         }
-    }
+   }
 }
