@@ -1,4 +1,4 @@
-Shader "Tommy/HairShadowSoild_Test"
+Shader "Custom/HairShadow"
 {
     Properties
     {
@@ -78,6 +78,7 @@ Shader "Tommy/HairShadowSoild_Test"
                 return _Color;
             }
             ENDHLSL
+
         }
     }
 }

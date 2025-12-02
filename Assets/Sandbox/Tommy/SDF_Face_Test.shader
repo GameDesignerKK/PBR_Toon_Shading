@@ -11,7 +11,7 @@ Shader "Custom/SDF_Face_Test"
         _StencilRef ("Stencil Ref", Range(0, 255)) = 128
 
         [Enum(UnityEngine.Rendering.CompareFunction)]
-        _StencilComp ("Stencil Comp", Float) = 0
+        _StencilComp ("Stencil Comp", Float) = 8
     }
 
     SubShader
@@ -29,10 +29,7 @@ Shader "Custom/SDF_Face_Test"
                 Comp [_StencilComp]
                 Pass replace
             }
-        }
 
-        Pass
-        {
             HLSLPROGRAM
 
             #pragma vertex vert
