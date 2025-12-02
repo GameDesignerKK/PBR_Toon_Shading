@@ -4,8 +4,8 @@ Shader "Custom/SDF_Face"
     {
         [MainColor] _BaseColor("Base Color", Color) = (1, 1, 1, 1)
         _ShadowColor("ShadowColor",Color) = (0,0,0,1)
-        _SDFMap("SDF Face Map", 2D) = "white"
-        [MainTexture] _BaseMap("Base Map", 2D) = "white"
+        _SDFMap("SDF Face Map", 2D) = "white"{}
+        [MainTexture] _BaseMap("Base Map", 2D) = "white"{}
     }
 
     SubShader
@@ -27,6 +27,12 @@ Shader "Custom/SDF_Face"
             {
                 //  Sample Spherical Harmonics L1
                 return SHEvalLinearL0L1(normalWS, unity_SHAr, unity_SHAg, unity_SHAb);
+            }
+
+            half3 SampleSH_OnlyL0(half3 normalWS)
+            {
+                // 只取 L0 常数项（unity_SHAr/g/b 的 w 分量）
+                return half3(unity_SHAr.w, unity_SHAg.w, unity_SHAb.w);
             }
 
             struct Attributes
