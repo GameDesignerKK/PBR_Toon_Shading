@@ -69,14 +69,14 @@ public class CelHairShadow_Stencil : ScriptableRendererFeature
             if (setting.material == null)
                 return;
 
-            // 获取渲染数据
-            var renderingData = frameData.Get<UniversalRenderingData>();
-            var cameraData = frameData.Get<UniversalCameraData>();
-            var lightData = frameData.Get<UniversalLightData>();
-            var resourceData = frameData.Get<UniversalResourceData>();
-
             using (var builder = renderGraph.AddRasterRenderPass<PassData>("Hair Shadow Pass", out var passData))
             {
+                // 获取渲染数据
+                var renderingData = frameData.Get<UniversalRenderingData>();
+                var cameraData = frameData.Get<UniversalCameraData>();
+                var lightData = frameData.Get<UniversalLightData>();
+                var resourceData = frameData.Get<UniversalResourceData>();
+
                 // ============ 配置材质参数（替代原来的 Configure） ============
                 setting.material.SetColor("_Color", setting.hairShadowColor);
                 setting.material.SetInt("_StencilRef", setting.stencilReference);
@@ -107,11 +107,6 @@ public class CelHairShadow_Stencil : ScriptableRendererFeature
 
                 setting.material.SetVector("_LightDirSS", lightDirSS);
 
-                // ============ 设置渲染目标 ============
-                // 写入颜色缓冲和读取深度缓冲
-                builder.SetRenderAttachment(resourceData.activeColorTexture, 0, AccessFlags.Write);
-                builder.SetRenderAttachmentDepth(resourceData.activeDepthTexture, AccessFlags.Read);
-
                 // ============ 创建 RendererList（替代原来的 DrawRenderers） ============
                 var sortingCriteria = cameraData.defaultOpaqueSortFlags;
                 var drawSettings = RenderingUtils.CreateDrawingSettings(
@@ -129,7 +124,12 @@ public class CelHairShadow_Stencil : ScriptableRendererFeature
                 var rendererList = renderGraph.CreateRendererList(rlParams);
 
                 passData.rendererList = rendererList;
-                builder.UseRendererList(rendererList);
+                builder.UseRendererList(passData.rendererList);
+
+                // ============ 设置渲染目标 ============
+                // 写入颜色缓冲和读取深度缓冲
+                builder.SetRenderAttachment(resourceData.activeColorTexture, 0, AccessFlags.Write);
+                builder.SetRenderAttachmentDepth(resourceData.activeDepthTexture, AccessFlags.Read);
 
                 // ============ 执行渲染（替代原来的 Execute） ============
                 builder.SetRenderFunc((PassData data, RasterGraphContext context) =>

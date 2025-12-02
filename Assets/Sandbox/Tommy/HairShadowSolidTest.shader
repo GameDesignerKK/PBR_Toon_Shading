@@ -6,7 +6,7 @@ Shader "Custom/HairShadow"
         _Offset ("Offset", float) = 0.02
         [Header(Stencil)]
         _StencilRef ("_StencilRef", Range(0, 255)) = 0
-        [Enum(UnityEngine.Rendering.CompareFunction)]_StencilComp ("_StencilComp", float) = 0
+        [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("_StencilComp", float) = 0
     }
     SubShader
     {
@@ -24,7 +24,7 @@ Shader "Custom/HairShadow"
 
         Pass
         {
-            Name "HairShadow"
+            Name "Hair Shadow Pass"
             Tags { "LightMode" = "UniversalForward" }
 
             Stencil
