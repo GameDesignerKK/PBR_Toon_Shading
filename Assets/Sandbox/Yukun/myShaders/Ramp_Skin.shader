@@ -1,4 +1,4 @@
-Shader "Custom/FirstTry"
+Shader "Custom/Ramp_Skin"
 {
     Properties
     {
@@ -14,7 +14,6 @@ Shader "Custom/FirstTry"
     SubShader
     {
         Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" }
-        //#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
         Pass
         {
@@ -25,7 +24,6 @@ Shader "Custom/FirstTry"
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-            //#include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
 
             struct Attributes
             {

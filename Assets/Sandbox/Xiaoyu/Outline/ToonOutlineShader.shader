@@ -31,8 +31,6 @@ Shader "Custom/ToonOutlineShader"
             CBUFFER_START(UnityPerMaterial)
                 float4 _OutlineColor;
                 float _OutlineWidth;
-                //float4x4 unity_ObjectToWorld;
-                //float4x4 unity_MatrixVP;
             CBUFFER_END
 
             // Object Space
