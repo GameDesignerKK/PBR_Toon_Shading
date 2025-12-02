@@ -36,9 +36,6 @@ Shader "Custom/RimLightShader"
                 float _RimSharpness;
                 float _RimBrightness;
                 float _RimDepthOffset;
-                //float4x4 unity_ObjectToWorld;
-                //float4x4 unity_MatrixVP;
-                //float3 _WorldSpaceCameraPos;
             CBUFFER_END
 
             // Object Space

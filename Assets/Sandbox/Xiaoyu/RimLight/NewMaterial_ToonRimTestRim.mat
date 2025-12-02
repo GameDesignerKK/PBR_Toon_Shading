@@ -105,9 +105,9 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RimBrightness: 2
+    - _RimBrightness: 5
     - _RimDepthOffset: 0.001
-    - _RimSharpness: 3
+    - _RimSharpness: 5
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
