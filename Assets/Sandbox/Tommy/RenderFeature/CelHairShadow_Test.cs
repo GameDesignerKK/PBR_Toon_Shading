@@ -12,7 +12,7 @@ public class CelHairShadow_Stencil : ScriptableRendererFeature
         [Header("Visual")]
         public Color hairShadowColor = Color.black;
 
-        [Range(0, 0.1f)]
+        [Range(0, 100f)]
         public float offset = 0.02f;
 
         [Header("Stencil")]

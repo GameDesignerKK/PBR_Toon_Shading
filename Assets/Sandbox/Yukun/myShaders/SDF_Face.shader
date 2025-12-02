@@ -6,6 +6,12 @@ Shader "Custom/SDF_Face"
         _ShadowColor("ShadowColor",Color) = (0,0,0,1)
         _SDFMap("SDF Face Map", 2D) = "white"{}
         [MainTexture] _BaseMap("Base Map", 2D) = "white"{}
+
+        [Header(Stencil)]
+        _StencilRef ("Stencil Ref", Range(0, 255)) = 128
+
+        [Enum(UnityEngine.Rendering.CompareFunction)]
+        _StencilComp ("Stencil Comp", Float) = 8
     }
 
     SubShader
@@ -14,6 +20,13 @@ Shader "Custom/SDF_Face"
 
         Pass
         {
+             Stencil
+            {
+                Ref [_StencilRef]
+                Comp [_StencilComp]
+                Pass replace
+            }
+
             HLSLPROGRAM
 
             #pragma vertex vert

@@ -133,7 +133,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
-    - _StencilComp: 3
+    - _StencilComp: 8
     - _StencilRef: 128
     - _Surface: 0
     - _UVSec: 0
