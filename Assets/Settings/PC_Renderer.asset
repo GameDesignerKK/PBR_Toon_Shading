@@ -33,12 +33,12 @@ MonoBehaviour:
   m_Name: CelHairShadow_Test
   m_EditorClassIdentifier: Assembly-CSharp::CelHairShadow_Test
   m_Active: 1
-  settings:
-    hairShadowColor: {r: 0.7924528, g: 0.55072975, b: 0.55072975, a: 0}
+  setting:
+    hairShadowColor: {r: 0, g: 0, b: 0, a: 0}
     offset: 0.02
     stencilReference: 128
     stencilComparison: 3
-    passEvent: 300
+    passEvent: 500
     hairLayer:
       serializedVersion: 2
       m_Bits: 64
