@@ -4,8 +4,8 @@
     {
         _Albedo("Albedo", Color) = (1,1,1,1)
 
-        _Metallic("Metallic", Range(0,1))   = 1      // 当作整体强度
-        _Smoothness("Smoothness", Range(0,1)) = 1   // 当作整体强度
+        _Metallic("Metallic", Range(0,1)) = 1
+        _Smoothness("Smoothness", Range(0,1)) = 1
 
         _MetallicMap("Metallic Map", 2D) = "white" {}
         _SmoothnessMap("Smoothness Map", 2D) = "white" {}
