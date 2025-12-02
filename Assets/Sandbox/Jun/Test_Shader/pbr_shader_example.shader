@@ -3,12 +3,16 @@
     Properties
     {
         _Albedo("Albedo", Color) = (1,1,1,1)
-
+        _BaseMap("BaseMap", 2D) = "white" {}
+        _RMOMap("RMOMap", 2D) = "white" {}
+        _NormalMap("NormalMAP", 2D) = "bump" {}
+        _BumpScale("NormalScale", Float) = 1.0
         _Metallic("Metallic", Range(0,1)) = 1
         _Smoothness("Smoothness", Range(0,1)) = 1
+        _AOPower("AOPower",Float) = 1
 
-        _MetallicMap("Metallic Map", 2D) = "white" {}
-        _SmoothnessMap("Smoothness Map", 2D) = "white" {}
+        //_MetallicMap("Metallic Map", 2D) = "white" {}
+        //_SmoothnessMap("Smoothness Map", 2D) = "white" {}
     }
 
     SubShader
@@ -24,6 +28,8 @@
 
         Pass
         {
+            Cull Off
+
             Name "ForwardLit"
             Tags {"LightMode" = "UniversalForward"}
 
@@ -53,54 +59,93 @@
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/GlobalIllumination.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/BRDF.hlsl"
 
-            TEXTURE2D(_MetallicMap);
-            SAMPLER(sampler_MetallicMap);
+            half3 SampleSH_L1(half3 normalWS)
+            {
+                //  Sample Spherical Harmonics L1
+                return SHEvalLinearL0L1(normalWS, unity_SHAr, unity_SHAg, unity_SHAb);
+            }
 
-            TEXTURE2D(_SmoothnessMap);
-            SAMPLER(sampler_SmoothnessMap);
+            TEXTURE2D(_BaseMap);
+            SAMPLER(sampler_BaseMap);
+
+            TEXTURE2D(_RMOMap);
+            SAMPLER(sampler_RMOMap);
+
+            TEXTURE2D(_NormalMap);
+            SAMPLER(sampler_NormalMap);
+
+            //TEXTURE2D(_MetallicMap);
+            //SAMPLER(sampler_MetallicMap);
+
+            //TEXTURE2D(_SmoothnessMap);
+            //SAMPLER(sampler_SmoothnessMap);
 
             struct Attributes
             {
                 float4 positionOS : POSITION;
                 float3 normalOS : NORMAL;
                 float2 uv : TEXCOORD0;
+                float4 tangentOS  : TANGENT;
             };
 
             struct Varyings
             {
                 float4 positionHCS : SV_POSITION;
-                float3 normalWS : NORMAL;
                 float3 positionWS : TEXCOORD0;
                 float2 uv : TEXCOORD1;
+                float3 normalWS : TEXCOORD2;
+                float3 tangentWS  : TEXCOORD3;
+                float3 BiNormalWS : TEXCOORD4;
             };
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _Albedo;
                 float _Metallic;
                 float _Smoothness;
+                float _BumpScale;
+                float _AOPower;
             CBUFFER_END
 
             Varyings vert (Attributes IN)
             {
                 Varyings OUT;
+                OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
                 OUT.positionWS = TransformObjectToWorld(IN.positionOS.xyz);
-                OUT.normalWS = normalize(TransformObjectToWorldNormal(IN.normalOS));
-                OUT.positionHCS = TransformWorldToHClip(OUT.positionWS);
                 OUT.uv = IN.uv;
+                OUT.normalWS = normalize(TransformObjectToWorldNormal(IN.normalOS));
+                OUT.tangentWS = normalize(TransformObjectToWorld(IN.tangentOS.xyz));
+                OUT.BiNormalWS = cross(OUT.normalWS, OUT.tangentWS) * IN.tangentOS.w;
                 return OUT;
             }
 
             half4 frag (Varyings IN) : SV_Target
             {
+                // ==== Normal Map: Tangent Space to World Space ====
+                float3 normalTex = UnpackNormalScale(SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, IN.uv),_BumpScale);
+
+                float3 N   = IN.normalWS;
+                float3 T   = IN.tangentWS;
+                float3 B   = IN.BiNormalWS;
+                
+                float3x3 TBN = float3x3(T, B, N);
+                float3 normalWS = normalize(mul(normalTex, TBN));   // 转换到世界空间并归一化
+
                 // Material parameters
                 float3 albedo = _Albedo.rgb;
                 float2 uv = IN.uv;
 
-                float metallicTex   = SAMPLE_TEXTURE2D(_MetallicMap,   sampler_MetallicMap,   uv).r;
-                float smoothnessTex = SAMPLE_TEXTURE2D(_SmoothnessMap, sampler_SmoothnessMap, uv).r;
+                //float metallicTex   = SAMPLE_TEXTURE2D(_MetallicMap,   sampler_MetallicMap,   uv).r;
+                //float smoothnessTex = SAMPLE_TEXTURE2D(_SmoothnessMap, sampler_SmoothnessMap, uv).r;
+                float4 albedoSample = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, uv);
+                albedo *= albedoSample.rgb;
+
+                float4 rmoSample = SAMPLE_TEXTURE2D(_RMOMap, sampler_RMOMap, uv);
+                float metallicTex   = rmoSample.g;
+                float roughnessTex = rmoSample.r;
+                float aoTex = rmoSample.b;
 
                 float metallic   = _Metallic   * metallicTex;
-                float smoothness = _Smoothness * smoothnessTex;
+                float smoothness = _Smoothness * (1-roughnessTex);
                 float roughness = 1.0 - smoothness;
 
                 Light main_light = GetMainLight();
@@ -109,7 +154,8 @@
                 // V
                 float3 view = normalize(_WorldSpaceCameraPos - IN.positionWS);
                 // N
-                float3 normal = normalize(IN.normalWS);
+                //float3 normal = normalize(IN.normalWS);
+                float3 normal = normalWS;
                 // H
                 float3 half_vector = normalize(light_direction + view);
 
@@ -146,7 +192,7 @@
 
                 // IBL / Environment
                 // 1) Environment diffuse (SH-based GI / sky)
-                float3 envDiffuse = SampleSH(normal);
+                float3 envDiffuse = SampleSH_L1(normal);
                 float3 iblDiffuse = envDiffuse * Kd * albedo;
 
                 // 2) Environment specular
@@ -158,6 +204,8 @@
                 float3 iblSpec = envSpec * F;
 
                 float3 color = directColor + iblDiffuse + iblSpec;
+
+                color *= pow(aoTex,_AOPower);
 
                 return float4(color, 1.0);
             }
