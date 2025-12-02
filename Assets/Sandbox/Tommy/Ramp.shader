@@ -26,6 +26,7 @@ Shader "Tommy/Ramp"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/EntityLighting.hlsl"
 
             struct Attributes
             {
@@ -42,6 +43,7 @@ Shader "Tommy/Ramp"
                 float2 uv         : TEXCOORD1;
                 float3 normalWS   : TEXCOORD2;
                 float4 tangentWS  : TEXCOORD3;
+                half3 diffuseGI : TEXCOORD4;
             };
 
             // Ramp 纹理（1D/2D 都可以，按 U 采样）
@@ -75,6 +77,8 @@ Shader "Tommy/Ramp"
                     output.normalWS   = vertexNormalInput.normalWS;
                     output.tangentWS  = real4(vertexNormalInput.tangentWS, sign);
 
+                    output.diffuseGI = SampleSH(output.normalWS);
+
                     return output;
                 }
 
@@ -102,7 +106,7 @@ Shader "Tommy/Ramp"
                     float3 lightColor = mainLight.color;
 
                     // URP 的 direction 通常是从光指向物体，这里取反得到“指向光源”的方向
-                    float3 lightDir = normalize(-mainLight.direction);
+                    float3 lightDir = normalize(mainLight.direction);
 
                     // Albedo（贴图 * 颜色）
                     float4 albedo = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv) * _BaseColor;
@@ -112,10 +116,10 @@ Shader "Tommy/Ramp"
                     float4 ambient      = float4(ambientColor, 1.0) * albedo;
 
                     // ==== Ramp Diffuse ====
-                    float lambert = saturate(dot(normalWS, lightDir));
+                    float lambert = dot(normalWS, lightDir)*0.5 + 0.5;
 
                     // 使用 lambert 作为 U 采样 ramp；V 可以用 0.5 或 lambert，看你的贴图设计
-                    float2 rampUV = float2(lambert, lambert);
+                    float2 rampUV = float2(lambert, 0.5);
                     float4 rampColor = SAMPLE_TEXTURE2D(_RampTex, sampler_RampTex, rampUV);
 
                     float4 diffuse = rampColor * float4(lightColor, 1.0) * albedo;
@@ -133,6 +137,8 @@ Shader "Tommy/Ramp"
                     // 合成最终颜色
                     float4 color = ambient + diffuse + specular;
                     color.a = 1.0;
+
+                    color.rgb += input.diffuseGI;
 
                     return color;
                 }

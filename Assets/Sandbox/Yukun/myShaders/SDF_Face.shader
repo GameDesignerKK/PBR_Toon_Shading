@@ -23,6 +23,12 @@ Shader "Custom/SDF_Face"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/EntityLighting.hlsl"
 
+            half3 SampleSH_L1(half3 normalWS)
+            {
+                //  Sample Spherical Harmonics L1
+                return SHEvalLinearL0L1(normalWS, unity_SHAr, unity_SHAg, unity_SHAb);
+            }
+
             struct Attributes
             {
                 float4 positionOS : POSITION;
@@ -58,7 +64,7 @@ Shader "Custom/SDF_Face"
                 OUT.normalWS = normalize(TransformObjectToWorldNormal(IN.normalOS.xyz));
                 OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
 
-                OUT.diffuseGI = SampleSH(OUT.normalWS);
+                OUT.diffuseGI = SampleSH_L1(OUT.normalWS);
                 return OUT;
             }
 
