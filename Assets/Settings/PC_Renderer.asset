@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: HairOutline
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.RenderObjects
-  m_Active: 0
+  m_Active: 1
   settings:
     passTag: HairOutline
     Event: 300
@@ -56,8 +56,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CelHairShadow_Test
   m_Active: 1
   setting:
-    hairShadowColor: {r: 0.6226415, g: 0.59327155, b: 0.59327155, a: 0.56078434}
-    offset: 0.7
+    hairShadowColor: {r: 0, g: 0, b: 0, a: 1}
+    offset: 0.0021
     stencilReference: 128
     stencilComparison: 3
     passEvent: 300
@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e7db16bc6d5c3f41943127f0a37463d, type: 3}
   m_Name: RimLight
   m_EditorClassIdentifier: Assembly-CSharp::RimLightRenderFeature
-  m_Active: 0
+  m_Active: 1
   settings:
     passEvent: 300
     layerMask:
@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: BodyOutline
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.RenderObjects
-  m_Active: 0
+  m_Active: 1
   settings:
     passTag: BodyOutline
     Event: 300
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: FaceOutline
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.RenderObjects
-  m_Active: 0
+  m_Active: 1
   settings:
     passTag: FaceOutline
     Event: 300

@@ -25,10 +25,10 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Offset: 0.7
+    - _Offset: 0.0021
     - _StencilComp: 3
     - _StencilRef: 128
     m_Colors:
-    - _Color: {r: 0.6226415, g: 0.59327155, b: 0.59327155, a: 0.56078434}
+    - _Color: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

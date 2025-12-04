@@ -10,7 +10,7 @@ Shader "Custom/HairShadow"
     }
     SubShader
     {
-        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline" }
+        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline" "Queue" = "Geometry-1"}
 
         HLSLINCLUDE
         #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -34,12 +34,11 @@ Shader "Custom/HairShadow"
                 Pass keep
             }
 
-            ZTest Less
+            ZTest LEqual
             ZWrite Off
 
-            Offset -1, -1
 
-            Blend SrcAlpha OneMinusSrcAlpha
+            Blend DstColor Zero
 
             HLSLPROGRAM
 
@@ -72,6 +71,7 @@ Shader "Custom/HairShadow"
                 //"Similar to Texture coordinates, the clip space coordinates differ between Direct3D-like and OpenGL-like platforms"
                 lightOffset.y = lightOffset.y * _ProjectionParams.x;
                 o.positionCS.xy += lightOffset * _Offset;
+
 
                 o.color = v.color;
                 return o;
