@@ -17,7 +17,7 @@ Shader "YK/BangShadow_YK"
         Pass
         {
             Name "FaceDepthOnly"
-            Tags { "LightMode" = "UniversalForward" }
+            Tags { "LightMode" = "DepthOnly" }
 
             ColorMask 0
             ZTest LEqual
@@ -56,9 +56,53 @@ Shader "YK/BangShadow_YK"
 
             half4 frag(Varyings IN) : SV_Target
             {
-                return (0,0,0,1);
+                return half4(0,0,0,1);
             }
             ENDHLSL
+        }
+
+        Pass
+        {
+            Name "DrawHair"
+            Tags { "LightMode" = "UniversalForward" }
+
+            Cull Off
+            ZTest LEqual
+            ZWrite Off
+
+            HLSLPROGRAM
+
+            #pragma vertex vert
+            #pragma fragment frag
+
+            struct a2v
+            {
+                float4 positionOS: POSITION;
+            };
+
+            struct v2f
+            {
+                float4 positionCS: SV_POSITION;
+            };
+
+
+            v2f vert(a2v v)
+            {
+                v2f o;
+
+                VertexPositionInputs positionInputs = GetVertexPositionInputs(v.positionOS.xyz);
+                o.positionCS = positionInputs.positionCS;
+                // Or this :
+                //o.positionCS = TransformObjectToHClip(v.positionOS.xyz);
+                return o;
+            }
+
+            half4 frag(v2f i): SV_Target
+            {
+                return float4(1, 1, 1, 1);
+            }
+            ENDHLSL
+
         }
     }
 }
