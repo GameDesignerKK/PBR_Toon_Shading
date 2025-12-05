@@ -1,4 +1,4 @@
-Shader "Custom/SDF_Face"
+Shader "YK/SDF_Face"
 {
     Properties
     {

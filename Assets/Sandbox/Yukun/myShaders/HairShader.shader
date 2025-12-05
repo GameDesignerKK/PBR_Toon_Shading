@@ -14,7 +14,7 @@ Shader "YK/HairShader"
 
     SubShader
     {
-        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" "LightMode" = "UniversalForward"}
+        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" "LightMode" = "UniversalForward" "Queue" = "Geometry" }
         //#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
         Pass
