@@ -67,14 +67,14 @@ public class BangShadowRenderFeature : ScriptableRendererFeature
         // It is passed as a parameter to the delegate function that executes the RenderGraph pass.
         private class PassData
         {
-            
+            internal RendererListHandle rendererList;
         }
 
         // This static method is passed as the RenderFunc delegate to the RenderGraph render pass.
         // It is used to execute draw commands.
         static void ExecutePass(PassData data, RasterGraphContext context)
         {
-            
+            context.cmd.DrawRendererList(data.rendererList);
         }
 
         // RecordRenderGraph is where the RenderGraph handle can be accessed, through which render passes can be added to the graph.

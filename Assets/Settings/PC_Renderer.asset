@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     passTag: DrawHairDepth
-    Event: 250
+    Event: 200
     filterSettings:
       RenderQueueType: 0
       LayerMask:
@@ -313,7 +313,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6236d5b2716ce2e4fb23ffd62667c08c, type: 3}
-  m_Name: BangShadowRenderFeature
+  m_Name: BangShadow
   m_EditorClassIdentifier: Assembly-CSharp::BangShadowRenderFeature
   m_Active: 1
   settings:
