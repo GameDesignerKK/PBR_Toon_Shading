@@ -54,13 +54,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33fdb42f6ce123741839225f9374a149, type: 3}
   m_Name: CelHairShadow_Test
   m_EditorClassIdentifier: Assembly-CSharp::CelHairShadow_Test
-  m_Active: 1
+  m_Active: 0
   setting:
     hairShadowColor: {r: 0, g: 0, b: 0, a: 1}
     offset: 0.0021
     stencilReference: 128
     stencilComparison: 3
-    passEvent: 300
+    passEvent: 250
     hairLayer:
       serializedVersion: 2
       m_Bits: 64
@@ -119,7 +119,8 @@ MonoBehaviour:
   - {fileID: -4422508350405224686}
   - {fileID: 295508466012611488}
   - {fileID: 2657675965416032216}
-  m_RendererFeatureMap: ad6b866f10d7b46cc4f6d5cf931a50c931f179e871e18efc12d7e5351618a0c2a063cd5862db1904d847b7a635f6e124
+  - {fileID: 8044039865718394598}
+  m_RendererFeatureMap: ad6b866f10d7b46cc4f6d5cf931a50c931f179e871e18efc12d7e5351618a0c2a063cd5862db1904d847b7a635f6e124e6ce3983a32ba26f
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -258,3 +259,26 @@ MonoBehaviour:
     BlurQuality: 0
     Falloff: 100
     SampleCount: -1
+--- !u!114 &8044039865718394598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6236d5b2716ce2e4fb23ffd62667c08c, type: 3}
+  m_Name: BangShadowRenderFeature
+  m_EditorClassIdentifier: Assembly-CSharp::BangShadowRenderFeature
+  m_Active: 1
+  settings:
+    hairLayer:
+      serializedVersion: 2
+      m_Bits: 64
+    faceLayer:
+      serializedVersion: 2
+      m_Bits: 128
+    queueMin: 2000
+    queueMax: 3000
+    material: {fileID: 2100000, guid: acc676e5bda47be448d172033fc77a2a, type: 2}
