@@ -125,6 +125,7 @@ Shader "YK/HairShader"
 
                 //  Sample texture
                 half4 texColor = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv) * _BaseColor;
+                texColor = pow(texColor,3);
 
                 //  Combine terms
                 half3 finalColor = texColor.rgb * (diffuse + ambient + specular);

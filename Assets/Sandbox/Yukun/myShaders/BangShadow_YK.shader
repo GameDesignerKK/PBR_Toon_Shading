@@ -17,7 +17,6 @@ Shader "YK/BangShadow_YK"
         Pass
         {
             Name "FaceDepthOnly"
-            Tags { "LightMode" = "DepthOnly" }
 
             ColorMask 0
             ZTest LEqual

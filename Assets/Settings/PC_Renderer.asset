@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: DrawHairDepth
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.RenderObjects
-  m_Active: 1
+  m_Active: 0
   settings:
     passTag: DrawHairDepth
     Event: 200
@@ -90,7 +90,7 @@ MonoBehaviour:
         m_Bits: 64
       PassNames:
       - DepthOnly
-    overrideMaterial: {fileID: 0}
+    overrideMaterial: {fileID: 2100000, guid: acc676e5bda47be448d172033fc77a2a, type: 2}
     overrideMaterialPassIndex: 0
     overrideShader: {fileID: 0}
     overrideShaderPassIndex: 0
@@ -317,12 +317,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BangShadowRenderFeature
   m_Active: 1
   settings:
+    passEvent: 250
     hairLayer:
       serializedVersion: 2
       m_Bits: 64
     faceLayer:
       serializedVersion: 2
-      m_Bits: 128
+      m_Bits: 384
     queueMin: 2000
     queueMax: 3000
     material: {fileID: 2100000, guid: acc676e5bda47be448d172033fc77a2a, type: 2}

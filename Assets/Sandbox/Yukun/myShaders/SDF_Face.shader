@@ -18,21 +18,19 @@ Shader "YK/SDF_Face"
     {
         Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" }
 
+        HLSLINCLUDE
+        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+        ENDHLSL
+
         Pass
         {
-             Stencil
-            {
-                Ref [_StencilRef]
-                Comp [_StencilComp]
-                Pass replace
-            }
+            Tags { "LightMode" = "UniversalForward" }
 
             HLSLPROGRAM
 
             #pragma vertex vert
             #pragma fragment frag
 
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/EntityLighting.hlsl"
 
@@ -67,6 +65,8 @@ Shader "YK/SDF_Face"
             SAMPLER(sampler_BaseMap);
             TEXTURE2D(_SDFMap);
             SAMPLER(sampler_SDFMap);
+            TEXTURE2D(_HairSoildColor);
+            SAMPLER(sampler_HairSoildColor);
 
             CBUFFER_START(UnityPerMaterial)
                 half4 _BaseColor;
@@ -124,7 +124,48 @@ Shader "YK/SDF_Face"
                 color.rgb += IN.diffuseGI;
 
 
+                // IN.screenPos À´×Ô vertex£ºpositionCS / w
+                float2 uv = IN.positionHCS.xy / IN.positionHCS.w;
+                float4 hairMask = SAMPLE_TEXTURE2D(_HairSoildColor, sampler_HairSoildColor, uv);
+
+
+
                 return color;
+            }
+            ENDHLSL
+        }
+
+        Pass
+        {
+            Name "FaceDepthOnly"
+            Tags { "LightMode" = "DepthOnly" }
+
+            ColorMask 0
+
+            HLSLPROGRAM
+
+            #pragma vertex vert
+            #pragma fragment frag
+
+            struct Attributes
+            {
+                float4 positionOS : POSITION;
+            };
+
+            struct Varyings
+            {
+                float4 positionHCS : SV_POSITION;
+            };
+            Varyings vert(Attributes IN)
+            {
+                Varyings OUT;
+                OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
+                return OUT;
+            }
+
+            half4 frag(Varyings IN) : SV_Target
+            {
+                return half4(0,0,0,1);
             }
             ENDHLSL
         }
