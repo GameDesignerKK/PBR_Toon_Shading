@@ -12,6 +12,8 @@ Shader "YK/SDF_Face"
 
         [Enum(UnityEngine.Rendering.CompareFunction)]
         _StencilComp ("Stencil Comp", Float) = 8
+
+        _HairShadowDistace ("HairShadowDistance", Float) = 1
     }
 
     SubShader
@@ -59,6 +61,8 @@ Shader "YK/SDF_Face"
                 float2 uv : TEXCOORD0;
                 half3 normalWS : TEXCOORD1;
                 half3 diffuseGI : TEXCOORD2;
+                float4 positionSS : TEXCOORD3;
+                float posNDCw: TEXCOORD4;
             };
 
             TEXTURE2D(_BaseMap);
@@ -73,6 +77,7 @@ Shader "YK/SDF_Face"
                 half4 _ShadowColor;
                 float4 _BaseMap_ST;
                 float4 _SDFMap_ST;
+                float _HairShadowDistace;
             CBUFFER_END
 
             Varyings vert(Attributes IN)
@@ -84,6 +89,11 @@ Shader "YK/SDF_Face"
                 OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
 
                 OUT.diffuseGI = SampleSH_L1(OUT.normalWS);
+
+                OUT.positionSS = ComputeScreenPos(OUT.positionHCS);
+
+                OUT.posNDCw = OUT.positionHCS.w;
+
                 return OUT;
             }
 
@@ -115,20 +125,27 @@ Shader "YK/SDF_Face"
                 half sdf_faceShadow = step(FdotL, sdf_color);
 
 
+                //  刘海投影部分！
+                float2 screenPos = IN.positionSS.xy / IN.positionSS.w;
+                //获取屏幕信息
+                float4 scaledScreenParams = GetScaledScreenParams();
+                //计算View Space的光照方向
+                float3 viewSpaceLightDir = normalize(TransformWorldToViewDir(mainLight.direction)) * (1 / IN.posNDCw);
+                //计算采样点，其中_HairShadowDistace用于控制采样距离
+                float2 samplingPoint = screenPos + _HairShadowDistace * viewSpaceLightDir.xy * float2(1 / scaledScreenParams.x, 1 / scaledScreenParams.y);
+                //若采样点在阴影区内,则取得的value为1,作为阴影的话还得用1 - value;
+                float hairShadow = SAMPLE_TEXTURE2D(_HairSoildColor, sampler_HairSoildColor, samplingPoint);
+
+                float shadowArea = hairShadow + (1-sdf_faceShadow);
+                shadowArea = 1 - step(0.5,shadowArea);
+
                 half4 baseMap_color = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv);
                 half4 LiangMian_color = _BaseColor * half4(mainLight.color,1.0);
                 half4 AnMian_color = _ShadowColor;
-                half4 color = baseMap_color * lerp(AnMian_color, LiangMian_color, sdf_faceShadow);
+                half4 color = baseMap_color * lerp(AnMian_color, LiangMian_color, shadowArea);
 
                 //  Add Diffuse Global Illumination
                 color.rgb += IN.diffuseGI;
-
-
-                // IN.screenPos 来自 vertex：positionCS / w
-                float2 uv = IN.positionHCS.xy / IN.positionHCS.w;
-                float4 hairMask = SAMPLE_TEXTURE2D(_HairSoildColor, sampler_HairSoildColor, uv);
-
-
 
                 return color;
             }

@@ -67,49 +67,6 @@ MonoBehaviour:
     queueMin: 2000
     queueMax: 3000
     material: {fileID: 2100000, guid: 6b90d3089bdb4f545b18ff00b28ba439, type: 2}
---- !u!114 &-1690947811530574459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: DrawHairDepth
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.RenderObjects
-  m_Active: 0
-  settings:
-    passTag: DrawHairDepth
-    Event: 200
-    filterSettings:
-      RenderQueueType: 0
-      LayerMask:
-        serializedVersion: 2
-        m_Bits: 64
-      PassNames:
-      - DepthOnly
-    overrideMaterial: {fileID: 2100000, guid: acc676e5bda47be448d172033fc77a2a, type: 2}
-    overrideMaterialPassIndex: 0
-    overrideShader: {fileID: 0}
-    overrideShaderPassIndex: 0
-    overrideMode: 1
-    overrideDepthState: 0
-    depthCompareFunction: 4
-    enableWrite: 1
-    stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 0
-      stencilCompareFunction: 8
-      passOperation: 0
-      failOperation: 0
-      zFailOperation: 0
-    cameraSettings:
-      overrideCamera: 0
-      restoreCamera: 1
-      offset: {x: 0, y: 0, z: 0, w: 0}
-      cameraFieldOfView: 60
 --- !u!114 &-248013050110938831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,8 +120,7 @@ MonoBehaviour:
   - {fileID: 295508466012611488}
   - {fileID: 2657675965416032216}
   - {fileID: 8044039865718394598}
-  - {fileID: -1690947811530574459}
-  m_RendererFeatureMap: ad6b866f10d7b46cc4f6d5cf931a50c931f179e871e18efc12d7e5351618a0c2a063cd5862db1904d847b7a635f6e124e6ce3983a32ba26f85f5fea7ec8b88e8
+  m_RendererFeatureMap: ad6b866f10d7b46cc4f6d5cf931a50c931f179e871e18efc12d7e5351618a0c2a063cd5862db1904d847b7a635f6e124e6ce3983a32ba26f
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
