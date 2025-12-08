@@ -99,7 +99,7 @@ public class RimLightRenderFeature1 : ScriptableRendererFeature
 
                 passData.rendererList = renderGraph.CreateRendererList(rendererListParams);
 
-=                builder.UseRendererList(passData.rendererList);
+                builder.UseRendererList(passData.rendererList);
 
                 builder.SetRenderAttachment(resourceData.activeColorTexture, 0);
                 builder.SetRenderAttachmentDepth(resourceData.activeDepthTexture, AccessFlags.Write);
