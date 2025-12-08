@@ -54,10 +54,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33fdb42f6ce123741839225f9374a149, type: 3}
   m_Name: CelHairShadow_Test
   m_EditorClassIdentifier: Assembly-CSharp::CelHairShadow_Test
-  m_Active: 0
+  m_Active: 1
   setting:
-    hairShadowColor: {r: 0, g: 0, b: 0, a: 1}
-    offset: 0.0002
+    hairShadowColor: {r: 0.7735849, g: 0.6454308, b: 0.5801887, a: 1}
+    offset: 0.6
     stencilReference: 128
     stencilComparison: 3
     passEvent: 300
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6236d5b2716ce2e4fb23ffd62667c08c, type: 3}
   m_Name: BangShadow
   m_EditorClassIdentifier: Assembly-CSharp::BangShadowRenderFeature
-  m_Active: 1
+  m_Active: 0
   settings:
     passEvent: 250
     hairLayer:

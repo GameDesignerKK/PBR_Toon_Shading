@@ -23,6 +23,9 @@ Shader "Custom/SDF_Face_Test"
             Name "BaseCel"
             Tags { "LightMode" = "UniversalForward" }
 
+            ZTest LEqual
+            ZWrite On
+
             Stencil
             {
                 Ref [_StencilRef]

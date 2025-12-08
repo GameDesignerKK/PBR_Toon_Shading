@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Vepley_face_m
-  m_Shader: {fileID: 4800000, guid: 0bb5f3f31ecc00749860cdf5a7167830, type: 3}
+  m_Shader: {fileID: 4800000, guid: 759230661e011d44b8bc00d8857e541c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -29,7 +29,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2001
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS

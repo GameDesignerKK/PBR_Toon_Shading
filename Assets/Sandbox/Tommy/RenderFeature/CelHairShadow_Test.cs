@@ -1,5 +1,4 @@
 using System;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.RenderGraphModule;
@@ -11,7 +10,7 @@ public class CelHairShadow_Stencil : ScriptableRendererFeature
     public class Setting
     {
         public Color hairShadowColor = Color.black;
-        [Range(0, 0.1f)]
+        [Range(0, 100f)]
         public float offset = 0.02f;
         [Range(0, 255)]
         public int stencilReference = 128;
