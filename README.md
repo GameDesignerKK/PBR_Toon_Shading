@@ -82,8 +82,8 @@ https://github.com/user-attachments/assets/753df12f-65ff-4de8-9381-45eeecf90220
 ## 3. Demo Video  
 *A demonstration of the hybrid PBR + NPR shading pipeline.*
 
-### Project Demo  
-[![Demo Video](INSERT_THUMBNAIL_URL)](https://github.com/GameDesignerKK/PBR_Toon_Shading/releases/download/demo/4590_raw.mp4)
+## Project Demo
+[Download Demo Video](https://github.com/GameDesignerKK/PBR_Toon_Shading/releases/download/demo/4590_raw.mp4)
 
 ---
 
