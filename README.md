@@ -56,5 +56,41 @@ Outline and rim lighting are integrated into the URP pipeline using a custom Ren
 
 ---
 
+# Visual Showcase
+
+### Custom PBR Shading  
+<img width="421" height="343" alt="CSCI580_Final_Project" src="https://github.com/user-attachments/assets/b4a33dfe-8459-4ad2-a378-0cac7620962c" />
+
+### Outline + Rim Lighting  
+<img width="426" height="355" alt="CSCI580_Final_Project (1)" src="https://github.com/user-attachments/assets/4e34a908-1fa9-4c63-baae-2bdc483056f5" />
+
+### Ramp Shading + Normal Mapping  
+<img width="374" height="433" alt="CSCI580_Final_Project (2)" src="https://github.com/user-attachments/assets/612dea21-64d3-48b7-9507-c1f1c88f26f5" />
+
+---
+
+## 2. Final Hybrid PBR + NPR Result  
+
+### Final Rendered Output  
+![5263f3c50290b6a23761163736b50cf7](https://github.com/user-attachments/assets/4d2a156c-b7ae-4375-bbd4-38f9860956ad)
+
+---
+
+## 3. Demo Video  
+*A demonstration of the hybrid PBR + NPR shading pipeline.*
+
+### Project Demo  
+
+
+---
+
 ## Notes  
 PBR and NPR effects are combined using a mask based blending method, allowing different shading styles to coexist on the same character while maintaining visual consistency.
+
+---
+
+# Contributors
+- Xiaoyu Zhao
+- Tommy Hu
+- Yukun Fang
+- Xiaojun Gong
