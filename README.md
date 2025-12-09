@@ -72,7 +72,10 @@ Outline and rim lighting are integrated into the URP pipeline using a custom Ren
 ## 2. Final Hybrid PBR + NPR Result  
 
 ### Final Rendered Output  
+
 ![5263f3c50290b6a23761163736b50cf7](https://github.com/user-attachments/assets/4d2a156c-b7ae-4375-bbd4-38f9860956ad)
+
+https://github.com/user-attachments/assets/753df12f-65ff-4de8-9381-45eeecf90220
 
 ---
 
@@ -80,7 +83,7 @@ Outline and rim lighting are integrated into the URP pipeline using a custom Ren
 *A demonstration of the hybrid PBR + NPR shading pipeline.*
 
 ### Project Demo  
-
+[![Demo Video](INSERT_THUMBNAIL_URL)](https://github.com/GameDesignerKK/PBR_Toon_Shading/releases/download/demo/4590_raw.mp4)
 
 ---
 
