@@ -124,7 +124,7 @@ Material:
     - _ReceiveShadows: 1
     - _ShadowEdgeA: 0.45
     - _ShadowEdgeB: 0.5
-    - _Shininess: 4
+    - _Shininess: 12.1
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -135,11 +135,11 @@ Material:
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.9339623, g: 0.90092117, b: 0.86788005, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ShadowColor: {r: 0.64779866, g: 0.4388424, b: 0.4298286, a: 1}
+    - _ShadowColor: {r: 0.6698113, g: 0.5063866, b: 0.45812565, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 2.230734, g: 2.2894275, b: 5.767265, a: 1}
+    - _SpecularColor: {r: 1.364219, g: 0.98322016, b: 0.76548773, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

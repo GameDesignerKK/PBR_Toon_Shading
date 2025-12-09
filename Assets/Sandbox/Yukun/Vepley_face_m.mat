@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Vepley_face_m
-  m_Shader: {fileID: 4800000, guid: 759230661e011d44b8bc00d8857e541c, type: 3}
+  m_Shader: {fileID: 4800000, guid: 0bb5f3f31ecc00749860cdf5a7167830, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -29,7 +29,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2001
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
@@ -142,13 +142,13 @@ Material:
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 0.9315388, b: 0.8632076, a: 1}
+    - _BaseColor: {r: 1, g: 0.96563345, b: 0.9292453, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0.7264151, g: 0.40775186, b: 0.40775186, a: 1}
     - _OutlineColor1: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 0.91772705, b: 0.41037738, a: 1}
-    - _ShadowColor: {r: 1, g: 0.5460055, b: 0.4764151, a: 1}
+    - _ShadowColor: {r: 0.8396226, g: 0.60595405, b: 0.61690724, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

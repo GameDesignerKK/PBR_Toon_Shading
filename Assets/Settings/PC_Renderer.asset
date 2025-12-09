@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: HairOutline
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.RenderObjects
-  m_Active: 1
+  m_Active: 0
   settings:
     passTag: HairOutline
     Event: 300
@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33fdb42f6ce123741839225f9374a149, type: 3}
   m_Name: CelHairShadow_Test
   m_EditorClassIdentifier: Assembly-CSharp::CelHairShadow_Test
-  m_Active: 1
+  m_Active: 0
   setting:
     hairShadowColor: {r: 0.7735849, g: 0.6454308, b: 0.5801887, a: 1}
     offset: 0.6
@@ -84,7 +84,7 @@ MonoBehaviour:
     passEvent: 300
     layerMask:
       serializedVersion: 2
-      m_Bits: 320
+      m_Bits: 576
     rimLightMaterial: {fileID: 2100000, guid: 67e7431c35deef34aa70bb5e54d6fe7c, type: 2}
     lightModeTag: UniversalForward
     onlyOpaque: 1
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: FaceOutline
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.RenderObjects
-  m_Active: 1
+  m_Active: 0
   settings:
     passTag: FaceOutline
     Event: 300
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6236d5b2716ce2e4fb23ffd62667c08c, type: 3}
   m_Name: BangShadow
   m_EditorClassIdentifier: Assembly-CSharp::BangShadowRenderFeature
-  m_Active: 0
+  m_Active: 1
   settings:
     passEvent: 250
     hairLayer:
@@ -279,7 +279,7 @@ MonoBehaviour:
       m_Bits: 64
     faceLayer:
       serializedVersion: 2
-      m_Bits: 384
+      m_Bits: 640
     queueMin: 2000
     queueMax: 3000
     material: {fileID: 2100000, guid: acc676e5bda47be448d172033fc77a2a, type: 2}

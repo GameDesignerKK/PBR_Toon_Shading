@@ -121,17 +121,17 @@ Shader "YK/HairShader"
                 specular *= highLightMask;
 
                 // Calculate ambient term
-                half3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz * _BaseColor.rgb;
+                //half3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz * _BaseColor.rgb;
 
                 //  Sample texture
-                half4 texColor = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv) * _BaseColor;
-                texColor = pow(texColor,3);
+                half4 texColor = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv);
+                texColor = pow(texColor,1);
 
                 //  Combine terms
-                half3 finalColor = texColor.rgb * (diffuse + ambient + specular);
+                half3 finalColor = texColor.rgb * (diffuse + specular);
 
                 //  Add Diffuse Global Illumination
-                finalColor.rgb += IN.diffuseGI;
+                finalColor.rgb += IN.diffuseGI * texColor.rgb;
 
                 return half4(finalColor,1.0);
             }

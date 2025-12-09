@@ -118,8 +118,8 @@ Shader "Tommy/Ramp"
                     float4 albedo = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv) * _BaseColor;
 
                     // ==== 环境光（简单常量环境光）====
-                    float3 ambientColor = float3(0.03, 0.03, 0.03);
-                    float4 ambient      = float4(ambientColor, 1.0) * albedo;
+                    //float3 ambientColor = float3(0.03, 0.03, 0.03);
+                    //float4 ambient      = float4(ambientColor, 1.0) * albedo;
 
                     // ==== Ramp Diffuse ====
                     float lambert = dot(normalWS, lightDir)*0.5 + 0.5;
@@ -141,10 +141,10 @@ Shader "Tommy/Ramp"
                     float4 specular  = float4(specColor, 0.0);
 
                     // 合成最终颜色
-                    float4 color = ambient + diffuse + specular;
+                    float4 color = diffuse + specular;
                     color.a = 1.0;
 
-                    color.rgb += input.diffuseGI;
+                    color.rgb += (input.diffuseGI * rampColor);
 
                     return color;
                 }

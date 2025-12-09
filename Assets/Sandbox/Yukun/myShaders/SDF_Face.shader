@@ -145,7 +145,7 @@ Shader "YK/SDF_Face"
                 half4 color = baseMap_color * lerp(AnMian_color, LiangMian_color, shadowArea);
 
                 //  Add Diffuse Global Illumination
-                color.rgb += IN.diffuseGI;
+                color.rgb += IN.diffuseGI * baseMap_color;
 
                 return color;
             }
