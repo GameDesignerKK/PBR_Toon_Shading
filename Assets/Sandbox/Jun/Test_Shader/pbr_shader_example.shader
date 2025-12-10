@@ -188,7 +188,7 @@
                 float3 diffuseDirect = Kd * albedo / PI;
 
                 // Direct lighting from main light
-                float3 directColor = (diffuseDirect + specDirect) * main_light.color * NdotL;
+                float3 directColor = (diffuseDirect + specDirect) * main_light.color * NdotL * PI;
 
                 // IBL / Environment
                 // 1) Environment diffuse (SH-based GI / sky)
