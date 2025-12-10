@@ -132,7 +132,7 @@ Shader "YK/SDF_Face"
                 //计算View Space的光照方向
                 float3 viewSpaceLightDir = normalize(TransformWorldToViewDir(mainLight.direction)) * (1 / IN.posNDCw);
                 //计算采样点，其中_HairShadowDistace用于控制采样距离
-                float2 samplingPoint = screenPos + _HairShadowDistace * viewSpaceLightDir.xy * float2(1 / scaledScreenParams.x, 1 / scaledScreenParams.y);
+                float2 samplingPoint = screenPos + _HairShadowDistace * viewSpaceLightDir.xy * float2(5 / scaledScreenParams.x, 5 / scaledScreenParams.y);
                 //若采样点在阴影区内,则取得的value为1,作为阴影的话还得用1 - value;
                 float hairShadow = SAMPLE_TEXTURE2D(_HairSoildColor, sampler_HairSoildColor, samplingPoint);
 

@@ -78,7 +78,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RampTex:
-        m_Texture: {fileID: 2800000, guid: 8c4dc73b655ae0c4eb3ba1cbe6d76e66, type: 3}
+        m_Texture: {fileID: 2800000, guid: 222d16dc74aa4fa4f9547e614b4b6c7e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SmoothnessMap:

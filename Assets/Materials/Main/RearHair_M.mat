@@ -140,6 +140,6 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _ShadowColor: {r: 0.6320754, g: 0.58897936, b: 0.5873531, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 1.551582, g: 2.5607858, b: 3.8993704, a: 1}
+    - _SpecularColor: {r: 2.3141105, g: 1.0243655, b: 0.5785276, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
