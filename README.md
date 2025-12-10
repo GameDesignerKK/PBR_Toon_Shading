@@ -87,11 +87,6 @@ https://github.com/user-attachments/assets/753df12f-65ff-4de8-9381-45eeecf90220
 
 ---
 
-## Notes  
-PBR and NPR effects are combined using a mask based blending method, allowing different shading styles to coexist on the same character while maintaining visual consistency.
-
----
-
 # Contributors
 - Xiaoyu Zhao
 - Tommy Hu
